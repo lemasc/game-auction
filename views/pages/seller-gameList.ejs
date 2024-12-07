@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <%- include('../partials/navbar'); %>
+    <div class="container mt-4">
+      <h1>Game List</h1>
+      <button
+        class="btn btn-primary my-3"
+        data-bs-toggle="modal"
+        data-bs-target="#addGameModal"
+      >
+        Add New Game
+      </button>
+
+      <div class="row">
+        <% if (games.length === 0) { %>
+        <p>No games available. Add the first game!</p>
+        <% } else { %> <% games.forEach(game => { %>
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <img
+              src="<%= game.imageUrl %>"
+              class="card-img-top"
+              alt="<%= game.title %>"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= game.title %></h5>
+              <p class="card-text"><%= game.description %></p>
+              <button
+                class="btn btn-warning edit-game-button"
+                data-slug="<%= game.slug %>"
+                data-bs-toggle="modal"
+                data-bs-target="#editGameModal"
+              >
+                <i class="bi bi-pencil"></i> Edit
+              </button>
+              <button
+                class="btn btn-danger delete-game-button"
+                data-slug="<%= game.slug %>"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteGameModal"
+              >
+                <i class="bi bi-trash"></i> Delete
+              </button>
+            </div>
+          </div>
+        </div>
+        <% }) %> <% } %>
+      </div>
+    </div>
+    <script>
+      // Injecting server-side games data into the client-side script
+      const games = JSON.parse(`<%- JSON.stringify(games) %>`);
+    </script>
+    <%- include('../partials/modal/seller-games') %> <%-
+    include('../partials/scripts') %>
+  </body>
+</html>
