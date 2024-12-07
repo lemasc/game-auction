@@ -50,4 +50,5 @@ Manages a list of seller's auctions (CRUD) One auction per one game only.
 ## Improvements
 - Proper authentication check
 - List all auctions, not just the minimum
-- Should spend more time studying Bootstrap cuz I forgot everything :(
+- Should spend more time studying Bootstrap and Express cuz I forgot everything :(
+- Data store in memory?? Allow MySQL or SQLITE?? ORM??
