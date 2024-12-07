@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <%- include('../partials/navbar'); %>
+    <div class="container mt-4">
+      <h1 class="mb-4">Games</h1>
+      <div class="row">
+        <% if (games.length === 0) { %>
+        <p>No games available.</p>
+        <% } else { %> <% games.forEach(game => { %>
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <img
+              src="<%= game.imageUrl %>"
+              class="card-img-top"
+              alt="<%= game.title %>"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= game.title %></h5>
+              <p class="card-text"><%= game.description %></p>
+              <a href="/products/<%= game.slug %>" class="btn btn-primary"
+                >View available offers</a
+              >
+            </div>
+          </div>
+        </div>
+        <% }) %> <% } %>
+      </div>
+    </div>
+    <%- include('../partials/scripts') %>
+  </body>
+</html>

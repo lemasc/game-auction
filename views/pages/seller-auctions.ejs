@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <%- include('../partials/navbar'); %>
+
+    <div class="container mt-4">
+      <h1>My Auctions</h1>
+      <button
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#createAuctionModal"
+      >
+        Create Auction
+      </button>
+
+      <div class="row mt-3">
+        <% auctions.forEach(auction => { %>
+        <div class="col-md-4">
+          <div class="card">
+            <img
+              src="<%= games.find(game => game.slug === auction.gameId).imageUrl %>"
+              class="card-img-top"
+              alt="<%= games.find(game => game.slug === auction.gameId).title %>"
+            />
+            <div class="card-body">
+              <h5 class="card-title">
+                <%= games.find(game => game.slug === auction.gameId).title %>
+              </h5>
+              <p class="card-text">Amount: $<%= auction.amount.toFixed(2) %></p>
+              <p class="card-text">
+                Created: <%= new Date(auction.dateTime).toLocaleString() %>
+              </p>
+              <button
+                class="btn btn-danger delete-auction-button"
+                data-id="<%= auction.id %>"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteAuctionModal"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+    <script>
+      // Injecting server-side games data into the client-side script
+      const games = JSON.parse(`<%- JSON.stringify(games) %>`);
+      const auctions = JSON.parse(`<%- JSON.stringify(auctions) %>`);
+    </script>
+    <%- include('../partials/scripts') %> <%-
+    include('../partials/modal/seller-auctions') %>
+  </body>
+</html>

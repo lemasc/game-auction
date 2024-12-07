@@ -6,27 +6,42 @@
   <body>
     <%- include('../partials/navbar'); %>
     <main class="container">
-      <h1>FINAL FANTASY VII REMAKE</h1>
+      <h1><%- game.title %></h1>
       <div class="container">
         <div class="row">
           <div class="col">
             <img
-              src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1462040/ss_20a352a2c20dd4bfb08fa131dc4c2e763510f584.1920x1080.jpg?t=1732013233"
+              src="<%- game.imageUrl %>"
               alt="FINAL FANTASY VII REMAKE"
-              class="img-fluid"
+              class="img-fluid rounded-4"
             />
           </div>
           <div
             class="col-3 container rounded-4 px-3"
             style="background-color: #f3f3f3"
           >
+            <h4 class="mb-3">Description</h4>
+            <p class="text-muted">
+              <% if (game.description) { %> <%= game.description %> <%} else {
+              %> No description available <% } %>
+            </p>
+            <h4 class="mb-3">Auctions</h4>
+            <!-- conditional render if auction length is zero -->
+            <% if (auctions.length === 0) { %>
+            <div class="alert alert-warning" role="alert">
+              No auctions available for this game.
+            </div>
+            <% } else { %>
             <div class="row mb-3">
-              <span class="fw-medium fs-5 text-secondary">Current Price</span>
-              <b class="fw-bold fs-1">$59.99</b>
+              <span class="fw-medium fs-5 text-secondary">Minimum Price</span>
+              <b class="fw-bold fs-1"
+                >$<%- (auctions[0].amount).toFixed(2) %></b
+              >
             </div>
             <button class="btn btn-primary container py-3 fs-5 fw-medium">
               Buy Now
             </button>
+            <% } %>
           </div>
         </div>
       </div>

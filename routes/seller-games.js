@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
-// In-memory game list
-const games = [];
+const games = require("../data/games");
 
 /**
  * GET /games - Render the game list page

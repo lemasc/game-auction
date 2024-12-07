@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
-const users = []; // In-memory storage for user data
+const users = require("../data/users");
 
 /**
  * GET /register - Render registration page
@@ -67,30 +66,21 @@ router.post("/login", (req, res) => {
   }
 
   // Set user session in cookies
-  res.cookie("session", { username }, { httpOnly: true, maxAge: 3600000 }); // 1-hour expiry
-  res.redirect("/dashboard");
-});
-
-/**
- * GET /dashboard - Render dashboard for logged-in user
- */
-router.get("/dashboard", (req, res) => {
-  const session = req.cookies.session;
-
-  if (!session || !session.username) {
-    return res.redirect("/login");
-  }
-
-  res.send(`<h1>Welcome, ${session.username}!</h1>
-            <a href="/logout">Logout</a>`);
+  req.session.userId = username;
+  res.redirect("/");
 });
 
 /**
  * GET /logout - Clear session and redirect to login
  */
 router.get("/logout", (req, res) => {
-  res.clearCookie("session");
-  res.redirect("/login");
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send("Failed to log out");
+    }
+    res.clearCookie("connect.sid"); // Clear the session cookie
+    res.redirect("/login");
+  });
 });
 
 module.exports = router;
